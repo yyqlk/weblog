@@ -1,7 +1,13 @@
 ##基于springboot的博客网站
 
 ##参考资料
-[spring](https://spring.io/guides)
+[spring文档](https://spring.io/guides)
+
+[springboot](https://docs.spring.io/spring-boot/docs/2.0.0.RC1/reference/htmlsingle/#boot-features-embedded-database-support)
+
+[spring-mybatis](http://www.mybatis.org/spring/zh/index.html)
+
+[springboot-mybatis](http://www.mybatis.org/spring-boot-starter/mybatis-spring-boot-autoconfigure/)
 
 [springMVC](https://spring.io/guides/gs/serving-web-content/)
 

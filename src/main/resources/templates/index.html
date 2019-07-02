@@ -36,9 +36,9 @@
                 </form>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="#">Link</a></li>
-                    <li><a href="https://github.com/login/oauth/authorize?client_id=e26e64f3b5e62950726c&redirect_uri=http://127.0.0.1:8080/callback&scope=user&state=1" >使用github登陆</a></li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">我 <span class="caret"></span></a>
+                    <li th:if="${#httpServletRequest.getAttribute('user') == null}"><a href="https://github.com/login/oauth/authorize?client_id=e26e64f3b5e62950726c&redirect_uri=http://127.0.0.1:8080/callback&scope=user&state=1" >使用github登陆</a></li>
+                    <li th:if="${#httpServletRequest.getAttribute('user') != null}"class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" th:text="${#httpServletRequest.getAttribute('user')}">我 <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a href="#">消息中心</a></li>
                             <li><a href="#">个人中心</a></li>
