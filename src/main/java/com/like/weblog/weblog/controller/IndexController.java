@@ -19,11 +19,13 @@ public class IndexController {
     @RequestMapping("index")
     public String index(HttpServletRequest request){
         Cookie[] cookies = request.getCookies();
-        for(Cookie cookie:cookies){
-            if(cookie.getName().equals("token")){
-                User user = userMapper.getUser(cookie.getValue());
-                request.setAttribute("user",user.getName());
-                return "index";
+        if (cookies != null){
+            for(Cookie cookie:cookies){
+                if(cookie.getName().equals("token")){
+                     User user = userMapper.getUser(cookie.getValue());
+                    request.setAttribute("user",user.getName());
+                    break;
+                }
             }
         }
         return "index";

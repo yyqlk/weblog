@@ -12,6 +12,10 @@ public interface UserMapper {
     @Select("SELECT * FROM user WHERE token = #{token}")
     User getUser(@Param("token") String token);
 
+    @Select("SELECT * FROM user WHERE acount_id = #{acountId} " )
+    User getUserById(@Param("acountId") Long id);
+
     @Insert("INSERT INTO user VALUE(#{acountId},#{name},#{token},#{gmtCreate},#{gmtModified})")
     void insertUser(User user);
+
 }

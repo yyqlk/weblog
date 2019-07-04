@@ -5,6 +5,7 @@ import com.like.weblog.weblog.dto.GithubUser;
 import com.like.weblog.weblog.map.UserMapper;
 import com.like.weblog.weblog.model.User;
 import com.like.weblog.weblog.provider.GithubProvider;
+import jdk.nashorn.internal.parser.Token;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -48,8 +49,14 @@ public class AuthorizeController {
             //登陆状态保持方法1：写入session
 //         request.getSession().setAttribute("githubUser",githubUser);
             //登录状态保持方法2：一般用内存数据库保存用户信息
+            //检查数据库中是否有这个用户
             User user = new User();
-            //2.生成token，并通过user存入数据库
+            user = userMapper.getUserById(githubUser.getId());
+            if( user != null){
+                response.addCookie(new Cookie("token",user.getToken()));
+                return "redirect:index";
+            };
+            //2. 如果是新用户，生成token，并通过user存入数据库
             String token = UUID.randomUUID().toString();
             user.setToken(token);
             user.setAcountId(githubUser.getId());
