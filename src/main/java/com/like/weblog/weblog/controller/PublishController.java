@@ -25,16 +25,6 @@ public class PublishController {
 
     @GetMapping("publish")
     public String publish(HttpServletRequest request){
-        Cookie[] cookies = request.getCookies();
-        if (cookies != null){
-            for(Cookie cookie:cookies){
-                if(cookie.getName().equals("token")){
-                    User user = userMapper.getUser(cookie.getValue());
-                    request.setAttribute("user",user.getName());
-                    break;
-                }
-            }
-        }
         return "publish";
     }
 
@@ -44,35 +34,24 @@ public class PublishController {
                          @RequestParam(value = "tag",required = false) String tag,
                          HttpServletRequest request,
                          Model model){
-        User user = null;
+
         model.addAttribute("title",title);
         model.addAttribute("description",description);
         model.addAttribute("tag",tag);
-        Cookie[] cookies = request.getCookies();
-        if (cookies != null){
-            for(Cookie cookie:cookies){
-                if(cookie.getName().equals("token")){
-                    user = userMapper.getUser(cookie.getValue());
-                    request.setAttribute("user",user.getName());
-                    break;
-                }
-            }
-            if (user==null){
-                request.setAttribute("publish_error","用户未登录");
-                return "publish";
-            }
-            if(title==null){
-                request.setAttribute("publish_error","title不能为空");
-                return "publish";
-            }
-            if(description==null){
-                request.setAttribute("publish_error","description不能为空");
-                return "publish";
-            }
-            if(tag==null){
-                request.setAttribute("publish_error","tag不能为空");
-                return "publish";
-            }
+        User user = (User) request.getAttribute("user");
+        request.setAttribute("user",user.getName());
+
+        if(title==null||title==""){
+            request.setAttribute("publish_error","title不能为空");
+            return "publish";
+        }
+        if(description==null||description==""){
+            request.setAttribute("publish_error","description不能为空");
+            return "publish";
+        }
+        if(tag==null||tag==""){
+            request.setAttribute("publish_error","tag不能为空");
+            return "publish";
         }
 
         Question question = new Question();
@@ -82,10 +61,10 @@ public class PublishController {
         question.setCreator(user.getAcountId());
         question.setGmtCreate(System.currentTimeMillis());
         question.setGmtModified(question.getGmtCreate());
-        question.setLikeCount(0);
-        question.setCommentCount(0);
-        question.setViewCount(0);
+        question.setLikeCount(1);
+        question.setCommentCount(1);
+        question.setViewCount(1);
         questionMap.create(question);
-        return "index";
+        return "redirect:index";
     }
 }

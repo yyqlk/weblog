@@ -50,19 +50,21 @@ public class AuthorizeController {
 //         request.getSession().setAttribute("githubUser",githubUser);
             //登录状态保持方法2：一般用内存数据库保存用户信息
             //检查数据库中是否有这个用户
-            User user = new User();
-            user = userMapper.getUserById(githubUser.getId());
-            if( user != null){
-                response.addCookie(new Cookie("token",user.getToken()));
+
+            User existUser = userMapper.getUserById(githubUser.getId());
+            if( existUser != null){
+                response.addCookie(new Cookie("token",existUser.getToken()));
                 return "redirect:index";
             };
             //2. 如果是新用户，生成token，并通过user存入数据库
+            User user = new User();
             String token = UUID.randomUUID().toString();
             user.setToken(token);
             user.setAcountId(githubUser.getId());
             user.setGmtCreate(System.currentTimeMillis());
             user.setGmtModified(user.getGmtCreate());
             user.setName(githubUser.getName());
+            user.setAvatarUrl(githubUser.getAvatarUrl());
             userMapper.insertUser(user);
             //2.把token存入cookie
             response.addCookie(new Cookie("token",token));

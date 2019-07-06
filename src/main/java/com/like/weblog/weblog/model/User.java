@@ -10,6 +10,15 @@ public class User {
     private  String token;
     private  long gmtCreate;
     private  long gmtModified;
+    private String avatarUrl;
+
+    public String getAvatarUrl() {
+        return avatarUrl;
+    }
+
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
+    }
 
     public long getAcountId() {
         return acountId;

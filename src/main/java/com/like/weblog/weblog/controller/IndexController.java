@@ -1,10 +1,12 @@
 package com.like.weblog.weblog.controller;
 
+import com.like.weblog.weblog.dto.PageQuestionDTO;
 import com.like.weblog.weblog.map.UserMapper;
 import com.like.weblog.weblog.model.User;
+import com.like.weblog.weblog.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -13,21 +15,23 @@ import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class IndexController {
+    @RequestMapping("/")
+    public String defaultView(){
+        return "redirect:index";
+    }
 
     @Autowired
     UserMapper userMapper;
+    @Autowired
+    QuestionService questionService;
     @RequestMapping("index")
-    public String index(HttpServletRequest request){
-        Cookie[] cookies = request.getCookies();
-        if (cookies != null){
-            for(Cookie cookie:cookies){
-                if(cookie.getName().equals("token")){
-                     User user = userMapper.getUser(cookie.getValue());
-                    request.setAttribute("user",user.getName());
-                    break;
-                }
-            }
-        }
+    public String index(HttpServletRequest request ,Model model,
+                        @RequestParam(value = "page",defaultValue = "1") Integer page,
+                        @RequestParam(value = "size",defaultValue = "7") Integer size){
+        User user = (User)request.getAttribute("user");
+        request.setAttribute("user",user.getName());
+        PageQuestionDTO questionListDTO = questionService.findQuestionDTO(page, size);
+        model.addAttribute("pageQuestionsDTO",questionListDTO);
         return "index";
     }
 }
