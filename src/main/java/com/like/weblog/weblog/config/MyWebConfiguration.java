@@ -10,11 +10,13 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class MyWebConfiguration implements WebMvcConfigurer{
+
     @Autowired
     LoginHandleInterceptor loginHandleInterceptor;
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(loginHandleInterceptor).addPathPatterns("/**").excludePathPatterns("/callback");
+        registry.addInterceptor(loginHandleInterceptor).addPathPatterns("/**").
+                excludePathPatterns("/callback");
     }
 
     @Override

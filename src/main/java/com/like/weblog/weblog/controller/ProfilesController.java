@@ -33,9 +33,10 @@ public class ProfilesController {
             model.addAttribute("profilesViews", "最新回复");
             model.addAttribute("section", "reversion");
         }
-        Cookie[] cookies = request.getCookies();
         User user = (User) request.getAttribute("user");
-        request.setAttribute("user",user.getName());
+        if(user!=null) {
+            request.setAttribute("user", user.getName());
+        }
         PageQuestionDTO questionListDTO = questionService.findQuestionDTOByCreater(page, size, user.getAcountId());
         model.addAttribute("pageQuestionsDTO",questionListDTO);
 

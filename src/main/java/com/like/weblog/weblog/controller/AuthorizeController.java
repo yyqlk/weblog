@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.Cookie;
@@ -54,7 +55,7 @@ public class AuthorizeController {
             User existUser = userMapper.getUserById(githubUser.getId());
             if( existUser != null){
                 response.addCookie(new Cookie("token",existUser.getToken()));
-                return "redirect:index";
+                return "redirect:/";
             };
             //2. 如果是新用户，生成token，并通过user存入数据库
             User user = new User();
@@ -68,11 +69,21 @@ public class AuthorizeController {
             userMapper.insertUser(user);
             //2.把token存入cookie
             response.addCookie(new Cookie("token",token));
-            return "redirect:index";
+            return "redirect:/";
         }else {
             request.setAttribute("login_erro","登陆失败，请重新登陆");
             //登陆失败，重新登陆
-            return "redirect:index";
+            return "redirect:/";
         }
     }
+
+    @RequestMapping("logout")
+    public String  logOut(HttpServletRequest request,HttpServletResponse response){
+        Cookie cookie = new Cookie("token", null);
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
+        return "redirect:/";
+    }
+
+
 }

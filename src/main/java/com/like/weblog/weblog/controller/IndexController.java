@@ -15,21 +15,19 @@ import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class IndexController {
-    @RequestMapping("/")
-    public String defaultView(){
-        return "redirect:index";
-    }
 
     @Autowired
     UserMapper userMapper;
     @Autowired
     QuestionService questionService;
-    @RequestMapping("index")
+    @RequestMapping("/")
     public String index(HttpServletRequest request ,Model model,
                         @RequestParam(value = "page",defaultValue = "1") Integer page,
                         @RequestParam(value = "size",defaultValue = "7") Integer size){
         User user = (User)request.getAttribute("user");
-        request.setAttribute("user",user.getName());
+        if (user!=null) {
+            request.setAttribute("user", user.getName());
+        }
         PageQuestionDTO questionListDTO = questionService.findQuestionDTO(page, size);
         model.addAttribute("pageQuestionsDTO",questionListDTO);
         return "index";

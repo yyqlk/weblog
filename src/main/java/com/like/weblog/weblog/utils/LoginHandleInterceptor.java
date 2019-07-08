@@ -30,16 +30,12 @@ public class LoginHandleInterceptor implements HandlerInterceptor {
                         request.setAttribute("user", user);
                         return true;
                     } else {
-                        request.setAttribute("error", "no login");
-                        request.getRequestDispatcher("/").forward(request, response);
-                        return false;
+                        return true;
                     }
                 }
             }
         }
-        request.setAttribute("error", "no login");
-        request.getRequestDispatcher("/").forward(request, response);
-        return false;
+        return true;
     }
 
 

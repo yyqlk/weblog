@@ -9,6 +9,7 @@ import com.like.weblog.weblog.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,6 +62,19 @@ public class QuestionService {
         pageQuestionDTO.setQuestionPage(page,size,totalCount);
 
         return pageQuestionDTO;
+    }
+
+    public QuestionDTO findQuestionById(String id){
+        Question question = questionMap.findQUestionById(id);
+        QuestionDTO questionDTO = new QuestionDTO();
+        questionDTO.setQuestion(question);
+        User user = userMapper.getUserById(question.getCreator());
+        questionDTO.setUser(user);
+        return questionDTO;
+    }
+
+    public void updateQuestion(String tag,String title,String description,String id,long modifideTime) {
+        questionMap.updateQuestion(tag,title,description,id,modifideTime);
     }
 }
 
