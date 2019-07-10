@@ -27,7 +27,6 @@ public class CustomizeErrotController implements ErrorController {
             model.addAttribute("message","请求出问题啦");
         }else if(status.is5xxServerError()){
             model.addAttribute("message","服务器出问题啦");
-
         }
         return new ModelAndView("error");
     }

@@ -28,7 +28,22 @@ body{
 .creator{
     padding-top: 11px;
 }
+.creator-min{
+    font-size: 12px;
+    font-weight: normal;
+    color: #999;
+}
 .question-text{
     margin-top: 10px;
-
+}
+.relpy{
+    margin-top: 30px
+}
+.icon-img{
+    margin-right: 6px;
+    color: #999;
+    cursor:pointer;
+}
+.icon-img:hover{
+    color: #28a4c9;
 }

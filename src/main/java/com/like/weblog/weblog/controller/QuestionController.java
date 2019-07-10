@@ -25,6 +25,7 @@ public class QuestionController {
             request.setAttribute("user", user.getName());
             request.setAttribute("userId", user.getAcountId());
         }
+
         questionService.incView(id);
         return "question";
     }
