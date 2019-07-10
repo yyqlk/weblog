@@ -8,7 +8,8 @@ body{
 }
 .btn-publish{
     float: right;
-    margin-bottom: 15px;
+    margin-top: 6px;
+    margin-bottom: 6px;
 }
 .media-object{
     height: 38px;
@@ -23,4 +24,11 @@ body{
 .row-content{
     margin-top: 30px;
     margin-: 15px;
+}
+.creator{
+    padding-top: 11px;
+}
+.question-text{
+    margin-top: 10px;
+
 }

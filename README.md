@@ -23,6 +23,8 @@
 
 [lomok](https://www.projectlombok.org/)
 
+[jQuery](https://api.jquery.com/)
+
 
 ##工具
 [git](https://www.liaoxuefeng.com/wiki/896043488029600)

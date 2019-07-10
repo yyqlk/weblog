@@ -4,7 +4,6 @@ import com.like.weblog.weblog.dto.CommentDTO;
 import com.like.weblog.weblog.dto.ResultDTO;
 import com.like.weblog.weblog.enums.CommentType;
 import com.like.weblog.weblog.expection.CustomizeErrorCode;
-import com.like.weblog.weblog.expection.ICustomizeErrorCode;
 import com.like.weblog.weblog.map.CommentMap;
 import com.like.weblog.weblog.map.QuestionMap;
 import com.like.weblog.weblog.model.Comment;
@@ -12,10 +11,9 @@ import com.like.weblog.weblog.model.Question;
 import com.like.weblog.weblog.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
-import java.util.Map;
 
 @Service
 public class CommentService {
@@ -25,12 +23,12 @@ public class CommentService {
     @Autowired
     CommentMap commentMap;
 
+    @Transactional
     public ResultDTO createUpdate(Comment comment, CommentDTO commentDTO, HttpServletRequest request) {
         //获取用户
         User user = (User) request.getAttribute("user");
         if (user == null) {
             return ResultDTO.errorOf(CustomizeErrorCode.NO_LOGIN);
-
         }
         comment.setCommentorId(user.getAcountId());
         comment.setGmtCreate(System.currentTimeMillis());

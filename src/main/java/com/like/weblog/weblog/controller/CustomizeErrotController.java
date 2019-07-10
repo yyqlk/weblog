@@ -29,7 +29,6 @@ public class CustomizeErrotController implements ErrorController {
             model.addAttribute("message","服务器出问题啦");
 
         }
-
         return new ModelAndView("error");
     }
 

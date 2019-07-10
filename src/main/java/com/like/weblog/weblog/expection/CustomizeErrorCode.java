@@ -1,11 +1,9 @@
 package com.like.weblog.weblog.expection;
 
-import com.like.weblog.weblog.expection.ICustomizeErrorCode;
-
 public enum CustomizeErrorCode implements ICustomizeErrorCode {
     QUESTION_NOT_FIND(2001, "你找的问题不在了，换一个问题吧"),
     NO_LOGIN(2002,"请登录后评论"),
-    COMMENT_NOT_FIND(2003,"你评论的评论不在了，不能评论了鸭")
+    COMMENT_NOT_FIND(2003,"你评论的评论不在了，不能评论了鸭");
 
 
     private String message;
