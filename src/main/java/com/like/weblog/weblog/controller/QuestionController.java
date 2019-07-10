@@ -17,7 +17,7 @@ public class QuestionController {
     QuestionService questionService;
 
     @GetMapping("/question/{id}")
-    public String getQuestin(@PathVariable("id") String id, Model model, HttpServletRequest request){
+    public String getQuestin(@PathVariable("id") Integer id, Model model, HttpServletRequest request){
         QuestionDTO questionDTO = questionService.findQuestionById(id);
         model.addAttribute("questionDTO",questionDTO);
         User user = (User)request.getAttribute("user");

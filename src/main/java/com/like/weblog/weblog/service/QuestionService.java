@@ -10,9 +10,7 @@ import com.like.weblog.weblog.model.Question;
 import com.like.weblog.weblog.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
 
-import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -68,7 +66,7 @@ public class QuestionService {
     }
 
 
-    public QuestionDTO findQuestionById(String id){
+    public QuestionDTO findQuestionById(Integer id){
         Question question = questionMap.findQUestionById(id);
         if(question==null){
             throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FIND);
@@ -85,7 +83,7 @@ public class QuestionService {
         return questionMap.updateQuestion(tag,title,description,id,modifideTime);
     }
 
-    public void incView(String id) {
+    public void incView(Integer id) {
         questionMap.incView(id);
     }
 }

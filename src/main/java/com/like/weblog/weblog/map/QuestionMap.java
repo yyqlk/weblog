@@ -27,13 +27,13 @@ public interface QuestionMap {
     Integer countByCreater(Long creator);
 
     @Select("SELECT * FROM question WHERE id = #{id}")
-    Question findQUestionById(String id);
+    Question findQUestionById(Integer id);
 
     @Update("UPDATE question SET title = #{title},description= #{description}, tag=#{tag}, gmt_modified=#{modifiedTime} WHERE id =#{id}")
     int updateQuestion(String tag,String title,String description,String id ,long modifiedTime);
 
     @Update("UPDATE question SET view_count = view_count+1 WHERE id =#{id}")
-    void incView(String id);
+    void incView(Integer id);
 
     @Update("UPDATE question SET comment_count = comment_count+1 WHERE id =#{parentId}")
     void updateQuestionComment(Integer parentId);
