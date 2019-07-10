@@ -2,12 +2,15 @@ package com.like.weblog.weblog.service;
 
 import com.like.weblog.weblog.dto.PageQuestionDTO;
 import com.like.weblog.weblog.dto.QuestionDTO;
+import com.like.weblog.weblog.expection.CustomizeErrorCode;
+import com.like.weblog.weblog.expection.CustomizeException;
 import com.like.weblog.weblog.map.QuestionMap;
 import com.like.weblog.weblog.map.UserMapper;
 import com.like.weblog.weblog.model.Question;
 import com.like.weblog.weblog.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import java.io.StringReader;
 import java.util.ArrayList;
@@ -64,17 +67,26 @@ public class QuestionService {
         return pageQuestionDTO;
     }
 
+
     public QuestionDTO findQuestionById(String id){
         Question question = questionMap.findQUestionById(id);
-        QuestionDTO questionDTO = new QuestionDTO();
-        questionDTO.setQuestion(question);
-        User user = userMapper.getUserById(question.getCreator());
-        questionDTO.setUser(user);
-        return questionDTO;
+        if(question==null){
+            throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FIND);
+        }else {
+            QuestionDTO questionDTO = new QuestionDTO();
+            questionDTO.setQuestion(question);
+            User user = userMapper.getUserById(question.getCreator());
+            questionDTO.setUser(user);
+            return questionDTO;
+        }
     }
 
-    public void updateQuestion(String tag,String title,String description,String id,long modifideTime) {
-        questionMap.updateQuestion(tag,title,description,id,modifideTime);
+    public int updateQuestion(String tag,String title,String description,String id,long modifideTime) {
+        return questionMap.updateQuestion(tag,title,description,id,modifideTime);
+    }
+
+    public void incView(String id) {
+        questionMap.incView(id);
     }
 }
 

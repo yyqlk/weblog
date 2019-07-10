@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>修改</title>
+    <title th:text="${questionDTO.question.title}"></title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" >
     <link rel="stylesheet" th:href="@{/css/bootstrap-theme.min.css}">
@@ -59,6 +59,7 @@
 
 
 
+                </div>
             </div>
         </div>
     </div>

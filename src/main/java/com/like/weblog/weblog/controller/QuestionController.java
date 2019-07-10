@@ -21,8 +21,11 @@ public class QuestionController {
         QuestionDTO questionDTO = questionService.findQuestionById(id);
         model.addAttribute("questionDTO",questionDTO);
         User user = (User)request.getAttribute("user");
-        request.setAttribute("user",user.getName());
-        request.setAttribute("userId",user.getAcountId());
+        if (user!=null) {
+            request.setAttribute("user", user.getName());
+            request.setAttribute("userId", user.getAcountId());
+        }
+        questionService.incView(id);
         return "question";
     }
 

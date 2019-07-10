@@ -63,7 +63,7 @@ public class PublishController {
 
         if(id != null){
             long modifiedTime = System.currentTimeMillis();
-            questionService.updateQuestion(tag,title,description,id,modifiedTime);
+            questionService.updateQuestion(tag, title, description, id, modifiedTime);
         }else {
             Question question = new Question();
             question.setTitle(title);
@@ -82,19 +82,4 @@ public class PublishController {
         return "redirect:/";
     }
 
-    @GetMapping("/publish/{id}")
-    public String getQuestin(@PathVariable("id") String id, Model model, HttpServletRequest request) {
-        QuestionDTO questionDTO = questionService.findQuestionById(id);
-        String title = questionDTO.getQuestion().getTitle();
-        String description =questionDTO.getQuestion().getDescription();
-        String tag = questionDTO.getQuestion().getTag();
-        model.addAttribute("tag",tag);
-        model.addAttribute("title",title);
-        model.addAttribute("description",description);
-        model.addAttribute("id",id);
-        User user = (User) request.getAttribute("user");
-        request.setAttribute("user", user.getName());
-        request.setAttribute("userId", user.getAcountId());
-        return "publish";
-    }
 }

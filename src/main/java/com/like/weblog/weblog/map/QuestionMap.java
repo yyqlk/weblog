@@ -30,5 +30,11 @@ public interface QuestionMap {
     Question findQUestionById(String id);
 
     @Update("UPDATE question SET title = #{title},description= #{description}, tag=#{tag}, gmt_modified=#{modifiedTime} WHERE id =#{id}")
-    void updateQuestion(String tag,String title,String description,String id ,long modifiedTime);
+    int updateQuestion(String tag,String title,String description,String id ,long modifiedTime);
+
+    @Update("UPDATE question SET view_count = view_count+1 WHERE id =#{id}")
+    void incView(String id);
+
+    @Update("UPDATE question SET comment_count = comment_count+1 WHERE id =#{parentId}")
+    void updateQuestionComment(Integer parentId);
 }

@@ -9,6 +9,8 @@
 
 [springboot-mybatis](http://www.mybatis.org/spring-boot-starter/mybatis-spring-boot-autoconfigure/)
 
+[mybatis generator](http://www.mybatis.org/generator/)
+
 [springMVC](https://spring.io/guides/gs/serving-web-content/)
 
 [bootstrap](https://v3.bootcss.com/getting-started/)
@@ -21,6 +23,7 @@
 
 [lomok](https://www.projectlombok.org/)
 
+
 ##工具
 [git](https://www.liaoxuefeng.com/wiki/896043488029600)
 
@@ -28,7 +31,8 @@
 
 [Visual Paradigm](https://www.visual-paradigm.com/cn/download/community.jsp)
 
+[postman](https://www.getpostman.com/)
 
-
-
+##命令和脚本
+`mvn -Dmybatis.generator.overwrite = true mybatis-generator：generate `
 
