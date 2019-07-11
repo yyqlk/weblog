@@ -4,9 +4,10 @@ import com.like.weblog.weblog.dto.CommentDTO;
 import com.like.weblog.weblog.dto.ResultDTO;
 import com.like.weblog.weblog.enums.CommentType;
 import com.like.weblog.weblog.expection.CustomizeErrorCode;
-import com.like.weblog.weblog.map.CommentMap;
+import com.like.weblog.weblog.map.CommentMapper;
 import com.like.weblog.weblog.map.QuestionMap;
 import com.like.weblog.weblog.model.Comment;
+import com.like.weblog.weblog.model.CommentExample;
 import com.like.weblog.weblog.model.Question;
 import com.like.weblog.weblog.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Service
 public class CommentService {
@@ -21,7 +23,7 @@ public class CommentService {
     @Autowired
     QuestionMap questionMap;
     @Autowired
-    CommentMap commentMap;
+    CommentMapper commentMapper;
 
     @Transactional
     public ResultDTO createUpdate(Comment comment, CommentDTO commentDTO, HttpServletRequest request) {
@@ -45,14 +47,16 @@ public class CommentService {
                 return ResultDTO.errorOf(CustomizeErrorCode.QUESTION_NOT_FIND);
             }
             //写入数据库
-            commentMap.create(comment);
+            commentMapper.insert(comment);
             questionMap.updateQuestionComment(commentDTO.getParentId());
             return ResultDTO.errorOf(2000, "success");
         }
         if (commentDTO.getType() == CommentType.COMMENT.getType()) {
             //回复评论
-            Comment pareComment = commentMap.findCommentById(commentDTO.getParentId());
-            if (pareComment.getId() == null) {
+            CommentExample commentExample = new CommentExample();
+            commentExample.createCriteria().andIdEqualTo(commentDTO.getParentId());
+            List<Comment> pareComment = commentMapper.selectByExample(commentExample);
+            if (pareComment.size() == 0) {
                 return ResultDTO.errorOf(CustomizeErrorCode.QUESTION_NOT_FIND);
             }
             return ResultDTO.errorOf(2000, "success");
