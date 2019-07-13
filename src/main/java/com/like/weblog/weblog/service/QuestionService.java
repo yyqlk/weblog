@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class QuestionService {
@@ -45,16 +46,25 @@ public class QuestionService {
 
     public PageQuestionDTO findQuestionDTOByCreater(Integer page, Integer size, Long creater) {
         Integer offset = size*(page-1);
+        //java8的新方法
         //封装页面的数据信息
         List<Question> questions = questionMap.findQuestionByCreater(offset,size,creater);
-        List<QuestionDTO> questionDTOs = new ArrayList<>();
-        for(Question question:questions){
+        User user = userMapper.getUserById(creater);
+        List<QuestionDTO> questionDTOs = questions.stream().map(question -> {
             QuestionDTO questionDTO = new QuestionDTO();
             questionDTO.setQuestion(question);
-            User user = userMapper.getUserById(question.getCreator());
             questionDTO.setUser(user);
-            questionDTOs.add(questionDTO);
-        }
+            return questionDTO;
+        }).collect(Collectors.toList());
+
+//        List<QuestionDTO> questionDTOs = new ArrayList<>();
+//        for(Question question:questions){
+//            QuestionDTO questionDTO = new QuestionDTO();
+//            questionDTO.setQuestion(question);
+//            User user = userMapper.getUserById(question.getCreator());
+//            questionDTO.setUser(user);
+//            questionDTOs.add(questionDTO);
+//        }
         //封装分页信息
         PageQuestionDTO pageQuestionDTO = new PageQuestionDTO();
         pageQuestionDTO.setQuestionDTOs(questionDTOs);

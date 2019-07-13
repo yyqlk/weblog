@@ -1,10 +1,15 @@
 body{
     background-color: #c4e3f3;
 }
+
+.hr{
+    margin: 10px;
+
+}
 .main{
     margin: 30px;
-    background-color: whitesmoke;
-    height:-webkit-fill-available;
+    background-color: white;
+    height: auto;
 }
 .btn-publish{
     float: right;
@@ -46,4 +51,13 @@ body{
 }
 .icon-img:hover{
     color: #28a4c9;
+}
+
+.icon-img.active{
+    color:#28a4c9;
+}
+.collapse-relpy{
+    margin-left: 10px;
+    border: 1px solid #eee;
+    padding-top: 10px;
 }

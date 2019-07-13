@@ -2,11 +2,30 @@ package com.like.weblog.weblog.dto;
 
 import com.like.weblog.weblog.expection.CustomizeErrorCode;
 
-public class ResultDTO {
+import java.util.List;
+
+public class ResultDTO<T> {
     private Integer code;
     private String message;
+    private List<T> data;
 
-    public static ResultDTO errorOf(Integer code,String message){
+    public List<T> getData() {
+        return data;
+    }
+
+    public void setData(List<T> data) {
+        this.data = data;
+    }
+
+    public static ResultDTO okOf(Integer code, String message, List data){
+        ResultDTO resultDTO =new ResultDTO();
+        resultDTO.setCode(code);
+        resultDTO.setMessage(message);
+        resultDTO.setData(data);
+        return  resultDTO;
+    }
+
+    public static ResultDTO okOf(Integer code, String message){
         ResultDTO resultDTO =new ResultDTO();
         resultDTO.setCode(code);
         resultDTO.setMessage(message);

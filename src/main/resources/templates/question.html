@@ -39,33 +39,59 @@
                     <span class="glyphicon glyphicon-pencil" aria-hidden="true" th:if="${questionDTO.user.acountId==#request.getAttribute('userId')}"><a th:href="@{'/publish/'+ ${questionDTO.question.id}}">修改</a></span>
                 </span>
                 </div>
-                <hr class="col-xs-12 col-sm-12 col-md-12 col-lg-12" >
+                <hr class="col-xs-12 col-sm-12 col-md-12 col-lg-12 hr" >
 <!--            回复内容-->
                 <h4>
                     <span th:text="${questionDTO.question.commentCount}"></span>个回复
                 </h4>
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <div class="media" >
+                    <div class="media" th:each="commentDTO:${commentDTOs}">
                         <div class="media-left">
                             <a href="#">
-                                <img class="media-object img-rounded" th:src="${questionDTO.user.avatarUrl}" alt="">
+                                <img class="media-object img-rounded" th:src="${commentDTO.user.avatarUrl}" alt="">
                             </a>
                         </div>
-                        <div class="media-body">
-                            <h5 class="media-heading creator-min" th:text="${questionDTO.user.name}"></h5>
+                        <div class="media-body" >
+                            <h5 class="media-heading creator-min" th:text="${commentDTO.user.name}"></h5>
 
-                            <div class="text-content">
-                                回复内容
-                            </div>
+                            <div class="text-content" th:text="${commentDTO.comment.content}"></div>
 
-                            <div>
+                            <div th:id="${'comment-body-'+commentDTO.comment.id}">
                                 <span class="glyphicon glyphicon-thumbs-up icon-img"></span>
-                                <span class="glyphicon glyphicon-comment icon-img"></span>
+                                <span class="glyphicon glyphicon-comment icon-img" th:data-id="${commentDTO.comment.id}"  onclick="collapseComment(this)" ></span>
                                 <span class="pull-right" th:text="${#dates.format(questionDTO.question.gmtCreate,'yyyy-mm-dd')}"></span>
+<!--                                二级回复栏-->
+<!--                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12  collapse"  th:id="${'comment'+commentDTO.comment.id}">-->
+
+<!--                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12  collapse-relpy">-->
+<!--                                        <div class="media" th:each="commentDTO:${commentDTOs}">-->
+<!--                                            <div class="media-left">-->
+<!--                                                <a href="#">-->
+<!--                                                    <img class="media-object img-rounded" th:src="${commentDTO.user.avatarUrl}" alt="">-->
+<!--                                                </a>-->
+<!--                                            </div>-->
+<!--                                            <div class="media-body">-->
+<!--                                                <h5 class="media-heading creator-min" th:text="${commentDTO.user.name}"></h5>-->
+
+<!--                                                <div class="text-content" th:text="${commentDTO.comment.content}"></div>-->
+<!--                                                <span class="glyphicon glyphicon-thumbs-up icon-img"></span>-->
+<!--                                                <span class="pull-right" th:text="${#dates.format(questionDTO.question.gmtCreate,'yyyy-mm-dd')}"></span>-->
+<!--                                            </div>-->
+
+<!--                                            <hr class="col-xs-12 col-sm-12 col-md-12 col-lg-12 hr" >-->
+<!--                                        </div>-->
+<!--                                        <input type="text" class="form-control" placeholder="请输入你的评论" th:id="${'replay'+commentDTO.comment.id}">-->
+<!--                                        <button type="button" class="btn btn-success btn-publish" th:data-id="${commentDTO.comment.id}"  onclick="c_comment(this)">评论</button>-->
+<!--                                    </div>-->
+<!--                                </div>-->
                             </div>
                         </div>
+                        <hr class="col-xs-12 col-sm-12 col-md-12 col-lg-12 hr">
                     </div>
+                    <hr class="col-xs-12 col-sm-12 col-md-12 col-lg-12 hr">
                 </div>
+
+
 
 <!--                评论-->
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 relpy" id="comment-section">
@@ -81,7 +107,7 @@
                     </div>
                     <input type="hidden" id="question_id" th:value="${questionDTO.question.id}">
                     <textarea class="form-control question-text" rows="5" id="comment-content"></textarea>
-                    <button type="button" class="btn btn-success btn-publish" onclick="post()">评论</button>
+                    <button type="button" class="btn btn-success btn-publish" onclick="q_comment()">评论</button>
                 </div>
             </div>
 
@@ -103,7 +129,7 @@
                         </div>
                      </div>
                 </div>
-                <hr class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <hr class="col-xs-12 col-sm-12 col-md-12 col-lg-12 hr">
 <!--                相关问题-->
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <h4>相关问题</h4>

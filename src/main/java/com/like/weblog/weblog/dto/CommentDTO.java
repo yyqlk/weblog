@@ -1,31 +1,25 @@
 package com.like.weblog.weblog.dto;
 
+import com.like.weblog.weblog.model.Comment;
+import com.like.weblog.weblog.model.User;
+
 public class CommentDTO {
-    private  Integer parentId;
-    private Integer type;
-    private String content;
+    private Comment comment;
+    private User user;
 
-    public Integer getParentId() {
-        return parentId;
+    public Comment getComment() {
+        return comment;
     }
 
-    public void setParentId(Integer parentId) {
-        this.parentId = parentId;
+    public void setComment(Comment comment) {
+        this.comment = comment;
     }
 
-    public Integer getType() {
-        return type;
+    public User getUser() {
+        return user;
     }
 
-    public void setType(Integer type) {
-        this.type = type;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
+    public void setUser(User user) {
+        this.user = user;
     }
 }
