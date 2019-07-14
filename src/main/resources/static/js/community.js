@@ -59,42 +59,73 @@ function post(parentId,commentContent,type) {
  */
 function collapseComment(e){
     var dataId = e.getAttribute("data-id");
-    //获取元素 dataId是一级评论的id
-    var commentId =$("#comment"+dataId);
+    //获取元素一级评论
+    var comment =$("#comment"+dataId);
     //判断展开还是关闭
     var mark = e.getAttribute("mark");
     if(mark){
         e.classList.remove("active");
-        e.removeAttribute("mark")
+        e.removeAttribute("mark");
         //点击关闭标签
-         commentId.removeClass("in");
-         var reply = "#comment"+dataId
-        $("div").remove(reply);
+         comment.removeClass("in");
+         //然后把绘制的element删除
+         var subreply = "#subcomment"+dataId;
+         $("div").remove(subreply);
     }else {
        //点击获取数据
-        $.getJSON( "/comment/"+dataId, function(data) {
-            var items = [];
-            var commentBody = $("#comment-body-"+dataId);
-            var data1 = data.data;
-            $.each(data1,function(commentDTO,info) {
-                var subcomment = $("<div>", {
-                    "class": "col-xs-12 col-sm-12 col-md-12 col-lg-12  collapse-relpy",
-                    html:items.push(info.comment.content)
-                });
-                items.join(subcomment);
-            });
-            $("<div>",{
-                "class":"col-xs-12 col-sm-12 col-md-12 col-lg-12  collapse in",
-                "id":"comment"+dataId,
-                html:items.join("")
-            }).appendTo(commentBody)
+        var subcomment = $("<div>", {
+            "class": "col-xs-12 col-sm-12 col-md-12 col-lg-12  collapse-relpy",
+            "id":"subcomment"+dataId,
         });
+        $.getJSON( "/comment/"+dataId, function(data) {
+            var commentData = data.data.reverse();
+             $.each(commentData,function(commentDTO,info) {
+                 //绘制media-left
+                 var mediaImg=$("<img>", {
+                     "class": "media-object img-rounded",
+                     "src":info.user.avatarUrl,
+                 });
+                 var mediaLeft = $("<div>", {
+                     "class": "media-left",
+                 }).append(mediaImg);
+                 //绘制media-body
+                 var mediaHead = $("<h5>", {
+                     "class": "media-heading creator-min",
+                     html: info.user.name
+                 });
+                 var mediaContent = $("<div>", {
+                     "class": "media-body",
+                     html: info.comment.content
+                 });
+                 var mediaSpan = $("<span>", {
+                     "class": "glyphicon glyphicon-thumbs-up icon-img",
+                 });
+
+                 var mediaBody = $("<div>", {
+                     "class": "media-body",
+                 });
+                 mediaBody.append(mediaHead);
+                 mediaBody.append(mediaContent);
+                 mediaBody.append(mediaSpan);
+
+                 var media = $("<div>", {
+                     "class": "media",
+                 });
+                 media.append(mediaLeft);
+                 media.append(mediaBody);
+
+                // comment.append(subcomment) //加到了最后面
+                 subcomment.prepend(media);
+                comment.prepend(subcomment)
+            });
+            });
+
         //点击展开二级评论
-        // commentId.addClass("in");
+        comment.addClass("in");
         //保持常亮
-        e.classList.add("active")
+        e.classList.add("active");
         //设置标记
-         e.setAttribute("mark", true)
+        e.setAttribute("mark", true)
     }
 
 }
