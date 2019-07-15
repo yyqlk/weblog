@@ -8,14 +8,14 @@
     <link rel="stylesheet" th:href="@{/css/yyqlk.css}">
     <script th:src="@{/js/jquery-3.4.1.min.js}" type="application/javascript"></script>
     <script th:src="@{/js/bootstrap.min.js}" type="application/javascript"></script>
-
+    <script th:src="@{/js/community.js}" type="application/javascript"></script>
 </head>
 <body>
 
 
     <nav th:replace="comment/navbar::top-navbar"></nav>
 
-
+<!--    问题发布-->
     <div class="container-fluid main" >
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
@@ -33,18 +33,43 @@
                     </div>
                     <div class="form-group">
                         <label for="title">添加标签</label>
-                        <input  class="form-control" id="tag"  name="tag" placeholder="输入标签，以逗号隔开" th:value="${tag}">
+                        <input  class="form-control" id="tag"  name="tag" placeholder="输入标签，以逗号隔开" th:value="${tag}"
+                                onclick="showTag()" autocomplete="off" >
                     </div>
-                    <button type="submit" class="btn btn-publish">发布</button>
-                    <span th:if="${#request.getAttribute('publish_error')!= null}" th:text="${#request.getAttribute('publish_error')}"></span>
+<!--                    标签栏-->
+                        <div id="tagBar" style="display: none">
+                            <!-- Nav tabs -->
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">开发语言</a></li>
+                                <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">平台框架</a></li>
+                            </ul>
+                            <!-- Tab panes -->
+                            <div class="tab-content">
+                                <div role="tabpanel" class="tab-pane active" id="home">
+                                    <span th:each="pTag:${pTags}">
+                                    <span class="label label-info" style="margin-left: 10px" onclick="addTag(this)" th:text="${pTag}">spring</span>
+                                    </span>
+                                </div>
+                                <div role="tabpanel" class="tab-pane" id="profile" >
+                                    <span th:each="fTag:${fTags}">
+                                    <span class="label label-info" style="margin-left: 10px" onclick="addTag(this)" th:text="${fTag}">springBoot</span>
+                                    </span>
+                                </div>
+                            </div>
+
+                        </div>
+
+<!--                    提交和提示消息-->
+                    <div>
+                        <button type="submit" class="btn btn-publish">发布</button>
+                        <span th:if="${#request.getAttribute('publish_error')!= null}" th:text="${#request.getAttribute('publish_error')}"></span>
+                    </div>
                 </form>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 btn-publish" background="white">
             </div>
         </div>
     </div>
-
-
 
 
 </body>

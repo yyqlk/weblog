@@ -1,6 +1,7 @@
 package com.like.weblog.weblog.controller;
 
 import com.like.weblog.weblog.dto.QuestionDTO;
+import com.like.weblog.weblog.enums.Tag;
 import com.like.weblog.weblog.map.QuestionMap;
 import com.like.weblog.weblog.map.UserMapper;
 import com.like.weblog.weblog.model.Question;
@@ -25,11 +26,13 @@ public class PublishController {
     QuestionService questionService;
 
     @GetMapping("/publish")
-    public String publish(HttpServletRequest request) {
+    public String publish(HttpServletRequest request,Model model) {
         User user = (User) request.getAttribute("user");
         if (user != null) {
             request.setAttribute("user", user.getName());
         }
+        model.addAttribute("pTags", Tag.PROGRAMMING.gettags());
+        model.addAttribute("fTags", Tag.FRAME.gettags());
         return "publish";
     }
 
@@ -61,7 +64,7 @@ public class PublishController {
             return "publish";
         }
 
-        if(id != null){
+        if(id != null && id != ""){
             long modifiedTime = System.currentTimeMillis();
             questionService.updateQuestion(tag,title,description,id,modifiedTime);
         }else {

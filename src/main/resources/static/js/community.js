@@ -3,7 +3,6 @@
  * post方式提交数据
  */
 
-
 function c_comment(e) {
     var commentId = e.getAttribute("data-id")
     var text_id = $("#replay"+commentId);
@@ -19,8 +18,6 @@ function q_comment() {
     var type =1;
     post(questionId,commentContent,type)
 }
-
-
 function post(parentId,commentContent,type) {
     $.ajax({
         type: "POST",
@@ -49,7 +46,6 @@ function post(parentId,commentContent,type) {
         dataType: "json"
     });
 }
-
 
 
 
@@ -129,3 +125,30 @@ function collapseComment(e){
     }
 
 }
+
+
+/**
+ * 展示标签库
+ */
+function showTag() {
+    // document.getElementById("tagBar").style.display="contents"
+    $("#tagBar").css("display","contents")
+}
+
+/**
+ * 点击添加tag
+ */
+
+function addTag(e) {
+    // var inputTagValue =document.getElementById("tag").innerText
+    var inputTagValue = $("#tag").val();
+    var tagValue = e.innerText;
+    if (inputTagValue.indexOf(tagValue) == -1) {
+        if (inputTagValue == null || inputTagValue == "") {
+            $("#tag").val(tagValue);
+        } else {
+            $("#tag").val(inputTagValue + "," + tagValue)
+        }
+    }
+}
+

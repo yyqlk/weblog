@@ -2,6 +2,7 @@ package com.like.weblog.weblog.controller;
 
 import com.like.weblog.weblog.dto.CommentDTO;
 import com.like.weblog.weblog.dto.QuestionDTO;
+import com.like.weblog.weblog.enums.Tag;
 import com.like.weblog.weblog.map.CommentMapper;
 import com.like.weblog.weblog.model.Comment;
 import com.like.weblog.weblog.model.Question;
@@ -11,10 +12,10 @@ import com.like.weblog.weblog.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -48,6 +49,8 @@ public class QuestionController {
         //获取相关问题
         List<Question> relatedQuestions = questionService.findQuestionByTag(id);
         model.addAttribute("relatedQuestions", relatedQuestions);
+        model.addAttribute("pTags", Tag.PROGRAMMING.gettags());
+        model.addAttribute("fTags", Tag.FRAME.gettags());
         return "question";
     }
 

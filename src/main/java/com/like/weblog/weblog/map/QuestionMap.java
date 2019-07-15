@@ -14,7 +14,7 @@ public interface QuestionMap {
     @Insert("INSERT INTO question VALUE(#{id},#{title},#{description},#{gmtCreate},#{gmtModified},#{creator},#{commentCount},#{likeCount},#{viewCount},#{tag})")
     public void create(Question question);
 
-    @Select("SELECT * FROM question LIMIT #{offset},#{size}")
+    @Select("SELECT * FROM question ORDER BY gmt_create DESC LIMIT #{offset},#{size}")
     List<Question> findAllQuestion(Integer offset, Integer size);
 
     @Select("select count(*) from question")
