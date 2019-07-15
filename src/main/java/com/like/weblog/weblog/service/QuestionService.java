@@ -12,8 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class QuestionService {
@@ -95,6 +97,19 @@ public class QuestionService {
 
     public void incView(Integer id) {
         questionMap.incView(id);
+    }
+
+    public List<Question> findQuestionByTag(Integer id) {
+//        查出问题的tag
+        Question question = questionMap.findQUestionById(id);
+        //修改tag为符合正则
+        String[] tags = question.getTag().split(",");
+        String tagsAgex = Arrays.stream(tags).collect(Collectors.joining("|"));
+        question.setTag(tagsAgex);
+
+//        通过问题的tag查出相关问题,
+        List<Question> questions = questionMap.findQUestionByTag(question);
+        return questions;
     }
 }
 

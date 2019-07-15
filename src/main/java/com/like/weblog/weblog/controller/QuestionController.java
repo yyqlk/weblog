@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -38,10 +39,15 @@ public class QuestionController {
         model.addAttribute("questionDTO",questionDTO);
         //获取问题评论详情
         List<Comment> comments = commentService.getCommentByParentId(questionDTO.getQuestion().getId());
-        List<CommentDTO> commentDTOS = commentService.getCommentDTO(comments);
-        model.addAttribute("commentDTOs",commentDTOS);
-        //获取二级评论的方法，第一种，直接从数据库中取出来放到页面，第二种，通过ajax点击再从数据库中取.
+        if(comments!=null) {
+            List<CommentDTO> commentDTOS = commentService.getCommentDTO(comments);
+            model.addAttribute("commentDTOs", commentDTOS);
+        }
+        //获取二级评论的方法，第一种，直接从数据库中取出来放到页面，第二种，通过ajax点击再从数据库中取.，本次通过第二种
         questionService.incView(id);
+        //获取相关问题
+        List<Question> relatedQuestions = questionService.findQuestionByTag(id);
+        model.addAttribute("relatedQuestions", relatedQuestions);
         return "question";
     }
 
