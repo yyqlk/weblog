@@ -2,7 +2,6 @@ package com.like.weblog.weblog.advice;
 
 import com.like.weblog.weblog.expection.CustomizeException;
 import com.like.weblog.weblog.model.User;
-import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;

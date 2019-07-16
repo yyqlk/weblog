@@ -17,12 +17,12 @@ public enum  Tag {
     }
     static List getPrograming(){
         ArrayList<String> programLanguage= new ArrayList<>();
-        programLanguage.addAll(Arrays.asList("java","python","js","php"));
+        programLanguage.addAll(Arrays.asList("java","python","js","php","c++","c#","c","go"));
         return programLanguage;
     }
     static List getFrame(){
         ArrayList<String> Frame= new ArrayList<>();
-        Frame.addAll(Arrays.asList("spring","springBoot","struts","mybatis","jsp","springMVC"));
+        Frame.addAll(Arrays.asList("Spring","springBoot","Struts","Mybatis","jsp","springMVC"));
         return Frame;
     }
     public List<String> gettags(){

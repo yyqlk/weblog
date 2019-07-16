@@ -40,19 +40,19 @@
                         <div id="tagBar" style="display: none">
                             <!-- Nav tabs -->
                             <ul class="nav nav-tabs" role="tablist">
-                                <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">开发语言</a></li>
+                                <li role="presentation"class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">开发语言</a></li>
                                 <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">平台框架</a></li>
                             </ul>
                             <!-- Tab panes -->
                             <div class="tab-content">
                                 <div role="tabpanel" class="tab-pane active" id="home">
                                     <span th:each="pTag:${pTags}">
-                                    <span class="label label-info" style="margin-left: 10px" onclick="addTag(this)" th:text="${pTag}">spring</span>
+                                        <span class="label label-info" style="margin-left: 10px" onclick="addTag(this)" th:text="${pTag}"></span>
                                     </span>
                                 </div>
                                 <div role="tabpanel" class="tab-pane" id="profile" >
                                     <span th:each="fTag:${fTags}">
-                                    <span class="label label-info" style="margin-left: 10px" onclick="addTag(this)" th:text="${fTag}">springBoot</span>
+                                        <span class="label label-info" style="margin-left: 10px" onclick="addTag(this)" th:text="${fTag}"></span>
                                     </span>
                                 </div>
                             </div>

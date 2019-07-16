@@ -7,6 +7,8 @@ import com.like.weblog.weblog.map.UserMapper;
 import com.like.weblog.weblog.model.Question;
 import com.like.weblog.weblog.model.User;
 import com.like.weblog.weblog.service.QuestionService;
+import com.like.weblog.weblog.service.TagService;
+import com.sun.xml.internal.ws.runtime.config.TubelineFeatureReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import java.util.Arrays;
+import java.util.List;
 
 @Controller
 public class PublishController {
@@ -24,6 +28,8 @@ public class PublishController {
     UserMapper userMapper;
     @Autowired
     QuestionService questionService;
+    @Autowired
+    TagService tagService;
 
     @GetMapping("/publish")
     public String publish(HttpServletRequest request,Model model) {
@@ -51,16 +57,30 @@ public class PublishController {
         if (user != null) {
             request.setAttribute("user", user.getName());
         }
+        boolean isContain = TagService.isContain(tag);
+        if(!isContain){
+            request.setAttribute("publish_error", "暂不支持自定义标签,请从下方标签中选择");
+            model.addAttribute("pTags", Tag.PROGRAMMING.gettags());
+            model.addAttribute("fTags", Tag.FRAME.gettags());
+            return "publish";
+        }
+
         if (title == null || title == "") {
             request.setAttribute("publish_error", "title不能为空");
+            model.addAttribute("pTags", Tag.PROGRAMMING.gettags());
+            model.addAttribute("fTags", Tag.FRAME.gettags());
             return "publish";
         }
         if (description == null || description == "") {
             request.setAttribute("publish_error", "description不能为空");
+            model.addAttribute("pTags", Tag.PROGRAMMING.gettags());
+            model.addAttribute("fTags", Tag.FRAME.gettags());
             return "publish";
         }
         if (tag == null || tag == "") {
             request.setAttribute("publish_error", "tag不能为空");
+            model.addAttribute("pTags", Tag.PROGRAMMING.gettags());
+            model.addAttribute("fTags", Tag.FRAME.gettags());
             return "publish";
         }
 
@@ -98,6 +118,9 @@ public class PublishController {
         User user = (User) request.getAttribute("user");
         request.setAttribute("user", user.getName());
         request.setAttribute("userId", user.getAcountId());
+        model.addAttribute("pTags", Tag.PROGRAMMING.gettags());
+        model.addAttribute("fTags", Tag.FRAME.gettags());
         return "publish";
     }
+
 }

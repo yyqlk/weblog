@@ -1,7 +1,6 @@
 package com.like.weblog.weblog.map;
 
 import com.like.weblog.weblog.model.Question;
-import com.like.weblog.weblog.model.User;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -20,7 +19,7 @@ public interface QuestionMap {
     @Select("select count(*) from question")
     Integer count();
 
-    @Select("SELECT * FROM question  WHERE creator = #{creator} LIMIT #{offset},#{size}")
+    @Select("SELECT * FROM question WHERE creator = #{creator} ORDER BY gmt_create DESC LIMIT #{offset},#{size}")
     List<Question> findQuestionByCreater(Integer offset, Integer size, Long creator);
 
     @Select("select count(*) from question WHERE creator = #{creator}")
