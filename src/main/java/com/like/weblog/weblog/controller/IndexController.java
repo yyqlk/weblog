@@ -10,7 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
@@ -28,7 +27,7 @@ public class IndexController {
         if (user!=null) {
             request.setAttribute("user", user.getName());
         }
-        PageQuestionDTO questionListDTO = questionService.findQuestionDTO(page, size);
+        PageQuestionDTO questionListDTO = questionService.findPageQuestionDTO(page, size);
         model.addAttribute("pageQuestionsDTO",questionListDTO);
         return "index";
     }

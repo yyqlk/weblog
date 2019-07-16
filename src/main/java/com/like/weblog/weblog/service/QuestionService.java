@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
 public class QuestionService {
@@ -24,7 +23,7 @@ public class QuestionService {
     @Autowired
     UserMapper userMapper;
 
-    public PageQuestionDTO findQuestionDTO(Integer page, Integer size) {
+    public PageQuestionDTO findPageQuestionDTO(Integer page, Integer size) {
         Integer offset = size*(page-1);
         //封装页面的数据信息
         List<Question> questions = questionMap.findAllQuestion(offset,size);

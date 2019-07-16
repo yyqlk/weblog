@@ -29,7 +29,7 @@
             <property name="enableSubPackages" value="true" />
         </javaClientGenerator>
 
-        <table tableName="COMMENT" domainObjectName="Comment" >
+        <table tableName="NOTICE" domainObjectName="Notice" >
         </table>
 
     </context>

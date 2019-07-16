@@ -12,63 +12,90 @@
 <body>
 
 
-<nav th:replace="comment/navbar:: top-navbar"></nav>
+    <nav th:replace="comment/navbar:: top-navbar"></nav>
 
-<div class="container-fluid main" >
-    <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
-        <h3><span class="glyphicon glyphicon-oil" aria-hidden="true" th:text="${profilesViews}"></span></h3>
-        <br>
+    <div class="container-fluid main" >
+        <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
+            <h3><span class="glyphicon glyphicon-oil" aria-hidden="true" th:text="${profilesViews}"></span></h3>
+            <br>
 
-        <!-- 我的问题-->
-        <div class="media" th:each="questionDTO:${pageQuestionsDTO.questionDTOs}" th:if="${section=='question'}">
-            <div class="media-left">
-                <a href="#">
-                    <img class="media-object img-rounded" th:src="${questionDTO.user.avatarUrl}" alt="">
-                </a>
+            <!-- 我的问题-->
+            <div class="media" th:each="questionDTO:${pageQuestionsDTO.questionDTOs}" th:if="${section=='question'}">
+                <div class="media-left">
+                    <a href="#">
+                        <img class="media-object img-rounded" th:src="${questionDTO.user.avatarUrl}" alt="">
+                    </a>
+                </div>
+                <div class="media-body">
+                    <a th:href="@{'question/'+ ${questionDTO.question.id}}">
+                        <h4 class="media-heading" th:text="${questionDTO.question.title}"></h4>
+                    </a>
+                    <span th:text="${questionDTO.question.description}"></span><br>
+                    <span class="text-desc"><span th:text="${questionDTO.question.commentCount}"></span>回复
+                        <span th:text="${questionDTO.question.likeCount}"></span>
+                        <span th:text="${questionDTO.question.viewCount}"></span>
+                        <span th:text="${#dates.format(questionDTO.question.gmtCreate,'dd MMM yyyy')}"></span></span>
+
+                </div>
             </div>
-            <div class="media-body">
-                <a th:href="@{'question/'+ ${questionDTO.question.id}}">
-                    <h4 class="media-heading" th:text="${questionDTO.question.title}"></h4>
-                </a>
-                <span th:text="${questionDTO.question.description}"></span><br>
-                <span class="text-desc"><span th:text="${questionDTO.question.commentCount}"></span>回复
-                    <span th:text="${questionDTO.question.likeCount}"></span>
-                    <span th:text="${questionDTO.question.viewCount}"></span>
-                    <span th:text="${#dates.format(questionDTO.question.gmtCreate,'dd MMM yyyy')}"></span></span>
+            <!--我的问题的分页信息-->
+            <nav aria-label="Page navigation" th:if="${section=='question'}">
+                <ul class="pagination">
+                    <li>
+                        <a th:if="${!pageQuestionsDTO.isfist}" th:href="@{/profiles/question(page=${pageQuestionsDTO.currentPage}-1)}" aria-label="Previous">
+                            <span aria-hidden="false">&laquo;</span>
+                        </a>
+                    </li>
+                    <li th:each="page:${pageQuestionsDTO.pages}"><a th:href="@{profiles/question(page=${page})}" th:text="${page}"></a></li>
 
+
+                    <li>
+                        <a th:if="${!pageQuestionsDTO.isLast}" th:href="@{/profiles/question(page=${pageQuestionsDTO.currentPage}+1)}" aria-label="Next">
+                            <span aria-hidden="false">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <!--我的通知-->
+            <div th:if="${section=='reversion'}">
+                <span th:each="notices:${pageNoticeDTO.notices}">
+                <span th:text="${notices.notifier}"></a></span>
+                    <span th:if="${notices.type==1}">回复了问题</span>
+                    <span th:if="${notices.type==2}">回复了评论</span>
+                    <span><a th:href="@{'/question/'+${notices.contentId}(status=${notices.status},noticeId=${notices.id})}" th:text="${notices.notifiedCotent}"></a></span>
+<!--                    加一个高亮或者其他元素标注已读未读-->
+                </span>
             </div>
+
+            <!--   我的通知分页信息  -->
+            <nav aria-label="Page navigation" th:if="${section=='reversion'}">
+                <ul class="pagination">
+                    <li>
+                        <a th:if="${!pageNoticeDTO.isfist}" th:href="@{index(page=${pageNoticeDTO.currentPage}-1)}" aria-label="Previous">
+                            <span aria-hidden="false">&laquo;</span>
+                        </a>
+                    </li>
+                    <li th:each="page:${pageNoticeDTO.pages}"><a th:href="@{index(page=${page})}" th:text="${page}"></a></li>
+
+
+                    <li>
+                        <a th:if="${!pageNoticeDTO.isLast}" th:href="@{index(page=${pageNoticeDTO.currentPage})}" aria-label="Next">
+                            <span aria-hidden="false">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
         </div>
-        <!--我的问题的分页信息-->
-        <nav aria-label="Page navigation" th:if="${section=='question'}">
-            <ul class="pagination">
-                <li>
-                    <a th:if="${!pageQuestionsDTO.isfist}" th:href="@{index(page=${pageQuestionsDTO.currentPage}-1)}" aria-label="Previous">
-                        <span aria-hidden="false">&laquo;</span>
-                    </a>
-                </li>
-                <li th:each="page:${pageQuestionsDTO.pages}"><a th:href="@{index(page=${page})}" th:text="${page}"></a></li>
 
+        <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 btn-publish" background="white">
+            <div class="list-group">
+                <a th:href="@{/profiles/question}"  th:class="${section=='question'}? 'list-group-item disabled':'list-group-item' " >我的问题</a>
+                <a th:href="@{/profiles/reversion}"  th:class="${section=='reversion'}? 'list-group-item disabled':'list-group-item' " >最新回复</a>
+            </div>
 
-                <li>
-                    <a th:if="${!pageQuestionsDTO.isLast}" th:href="@{index(page=${pageQuestionsDTO.currentPage}+1)}" aria-label="Next">
-                        <span aria-hidden="false">&raquo;</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
-
+        </div>
     </div>
-
-
-
-    <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 btn-publish" background="white">
-        <div class="list-group">
-            <a th:href="@{/profiles/question}"  th:class="${section=='question'}? 'list-group-item disabled':'list-group-item' " >我的问题</a>
-            <a th:href="@{/profiles/reversion}"  th:class="${section=='reversion'}? 'list-group-item disabled':'list-group-item' " >最新回复</a>
-    </div>
-
-
-</div>
 
 
 </body>

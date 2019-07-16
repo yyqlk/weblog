@@ -31,7 +31,8 @@ public class CommentService {
     CommentMapper commentMapper;
     @Autowired
     UserMapper userMapper;
-
+    @Autowired
+    NoticeService noticeService;
 
     @Transactional
     public ResultDTO createUpdate(Comment comment, CommentCreateDTO commentCreateDTO, HttpServletRequest request) {
@@ -56,6 +57,9 @@ public class CommentService {
             }
             //写入数据库
             commentMapper.insert(comment);
+            //创建通知
+            noticeService.create(question,user,1);
+            //更新问题回复数
             questionMap.updateQuestionComment(commentCreateDTO.getParentId());
             return ResultDTO.okOf(2000, "success");
         }
@@ -63,12 +67,17 @@ public class CommentService {
             //回复评论
             CommentExample commentExample = new CommentExample();
             commentExample.createCriteria().andIdEqualTo(commentCreateDTO.getParentId());
-            List<Comment> pareComment = commentMapper.selectByExample(commentExample);
-            if (pareComment.size() == 0) {
+            List<Comment> pareComments = commentMapper.selectByExample(commentExample);
+            if (pareComments.size() == 0) {
                 return ResultDTO.errorOf(CustomizeErrorCode.QUESTION_NOT_FIND);
             }
             commentMapper.insert(comment);
-            questionMap.updateQuestionComment(commentCreateDTO.getParentId());
+            //创建通知
+            Comment pareComment = pareComments.get(0);
+            Question pareQuestion = questionMap.findQUestionById(pareComment.getParentId());
+            noticeService.create(comment,pareQuestion,user,2);
+
+            //更新评论的子评论数（未开发）
             return ResultDTO.okOf(2000, "success");
         }
         return ResultDTO.okOf(00000,"未知错误");

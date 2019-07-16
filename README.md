@@ -1,5 +1,5 @@
-##基于springboot的博客网站
-
+#基于springboot的博客网站
+#使用的技术和参考资料如下
 ##参考资料
 [spring文档](https://spring.io/guides)
 
@@ -36,5 +36,6 @@
 [postman](https://www.getpostman.com/)
 
 ##命令和脚本
-`mvn -Dmybatis.generator.overwrite = true mybatis-generator：generate `
+mvn方式逆向生成mybatis：
+```mvn mybatis-generator:generate```
 

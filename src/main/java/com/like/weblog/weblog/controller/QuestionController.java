@@ -4,6 +4,7 @@ import com.like.weblog.weblog.dto.CommentDTO;
 import com.like.weblog.weblog.dto.QuestionDTO;
 import com.like.weblog.weblog.enums.Tag;
 import com.like.weblog.weblog.map.CommentMapper;
+import com.like.weblog.weblog.map.NoticeExMapper;
 import com.like.weblog.weblog.model.Comment;
 import com.like.weblog.weblog.model.Question;
 import com.like.weblog.weblog.model.User;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -26,14 +28,28 @@ public class QuestionController {
     CommentService commentService;
     @Autowired
     CommentMapper commentMapper;
+    @Autowired
+    NoticeExMapper noticeExMapper;
+    ;
 
     @GetMapping("/question/{id}")
-    public String getQuestin(@PathVariable("id") Integer id, Model model, HttpServletRequest request){
+    public String getQuestin(@PathVariable("id") Integer id,
+                             @RequestParam(value = "status" ,required = false) Integer status,
+                             @RequestParam(value = "noticeId" ,required = false) Integer noticeId,
+                             Model model, HttpServletRequest request){
         //获取登陆用户
         User user = (User)request.getAttribute("user");
         if (user!=null) {
             request.setAttribute("user", user.getName());
             request.setAttribute("userId", user.getAcountId());
+        }
+
+        //如果携带status参数，便是从通知过来的，把状态设为已读
+        if(status !=null){
+            if (status==0){
+                status =1;
+                noticeExMapper.updateStatusById(status,noticeId);
+            }
         }
         //获取问题详情
         QuestionDTO questionDTO = questionService.findQuestionById(id);
