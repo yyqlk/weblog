@@ -1,8 +1,10 @@
 package com.like.weblog.weblog.controller;
 
 import com.like.weblog.weblog.dto.PageQuestionDTO;
+import com.like.weblog.weblog.map.NoticeMapper;
 import com.like.weblog.weblog.map.UserMapper;
 import com.like.weblog.weblog.model.User;
+import com.like.weblog.weblog.service.NoticeService;
 import com.like.weblog.weblog.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,13 +21,19 @@ public class IndexController {
     UserMapper userMapper;
     @Autowired
     QuestionService questionService;
+
+    @Autowired
+    NoticeService noticeService;
     @RequestMapping("/")
     public String index(HttpServletRequest request ,Model model,
                         @RequestParam(value = "page",defaultValue = "1") Integer page,
                         @RequestParam(value = "size",defaultValue = "7") Integer size){
         User user = (User)request.getAttribute("user");
         if (user!=null) {
+            //把uesr传到页面
             request.setAttribute("user", user.getName());
+            //把用户的通知传到也页面
+            model.addAttribute("noticeCount",noticeService.countNotice(user.getAcountId()));
         }
         PageQuestionDTO questionListDTO = questionService.findPageQuestionDTO(page, size);
         model.addAttribute("pageQuestionsDTO",questionListDTO);

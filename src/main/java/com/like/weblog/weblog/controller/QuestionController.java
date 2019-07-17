@@ -9,6 +9,7 @@ import com.like.weblog.weblog.model.Comment;
 import com.like.weblog.weblog.model.Question;
 import com.like.weblog.weblog.model.User;
 import com.like.weblog.weblog.service.CommentService;
+import com.like.weblog.weblog.service.NoticeService;
 import com.like.weblog.weblog.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,7 +31,9 @@ public class QuestionController {
     CommentMapper commentMapper;
     @Autowired
     NoticeExMapper noticeExMapper;
-    ;
+
+    @Autowired
+    NoticeService noticeService;
 
     @GetMapping("/question/{id}")
     public String getQuestin(@PathVariable("id") Integer id,
@@ -42,6 +45,7 @@ public class QuestionController {
         if (user!=null) {
             request.setAttribute("user", user.getName());
             request.setAttribute("userId", user.getAcountId());
+            model.addAttribute("noticeCount",noticeService.countNotice(user.getAcountId()));
         }
 
         //如果携带status参数，便是从通知过来的，把状态设为已读

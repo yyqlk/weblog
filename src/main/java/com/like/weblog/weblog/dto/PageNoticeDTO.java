@@ -11,15 +11,21 @@ public class PageNoticeDTO {
     private boolean isfist;
     private boolean isLast;
     private Integer currentPage; //当前页
-    private Integer totalPage;
+    private Integer totalPage; //总页数
     private List<Integer> pages; //页数集合
 
     public void setNoticesPage(Integer page, Integer size, Integer totalCount){
         this.currentPage=page;
         if(totalCount%size != 0){
             this.totalPage=totalCount/size+1;
+            if(totalPage<1){
+                totalPage=1;
+            }
         }else{
             this.totalPage=totalCount/size;
+            if(totalPage<1){
+                totalPage=1;
+            }
         }
         if(currentPage == 1){
             this.isfist = true;
@@ -44,7 +50,7 @@ public class PageNoticeDTO {
             for (int i = currentPage - 3; i < currentPage + 2; i++) {
                 pages.add(i);
             }
-        }else if (currentPage + 2 > totalPage) {
+        }else if (currentPage + 2 > totalPage && totalPage>5) {
             for (int i = totalPage - 5; i < totalPage; i++) {
                 pages.add(i);
             }

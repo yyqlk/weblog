@@ -44,7 +44,7 @@ public class AuthorizeController {
         accessTokenDTO.setClient_secret(clientSecret);
         accessTokenDTO.setRedirect_uri(RedirectUri);
         String accessToken = githubProvider.getAccessToken(accessTokenDTO);
-        System.out.println(accessToken);
+//        System.out.println(accessToken);
         GithubUser githubUser = githubProvider.getUser(accessToken);
         if(githubUser != null){
             //登陆状态保持方法1：写入session

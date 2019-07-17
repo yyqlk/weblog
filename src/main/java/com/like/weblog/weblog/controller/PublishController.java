@@ -6,18 +6,18 @@ import com.like.weblog.weblog.map.QuestionMap;
 import com.like.weblog.weblog.map.UserMapper;
 import com.like.weblog.weblog.model.Question;
 import com.like.weblog.weblog.model.User;
+import com.like.weblog.weblog.service.NoticeService;
 import com.like.weblog.weblog.service.QuestionService;
 import com.like.weblog.weblog.service.TagService;
-import com.sun.xml.internal.ws.runtime.config.TubelineFeatureReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import java.util.Arrays;
-import java.util.List;
 
 @Controller
 public class PublishController {
@@ -30,12 +30,15 @@ public class PublishController {
     QuestionService questionService;
     @Autowired
     TagService tagService;
+    @Autowired
+    NoticeService noticeService;
 
     @GetMapping("/publish")
     public String publish(HttpServletRequest request,Model model) {
         User user = (User) request.getAttribute("user");
         if (user != null) {
             request.setAttribute("user", user.getName());
+            model.addAttribute("noticeCount",noticeService.countNotice(user.getAcountId()));
         }
         model.addAttribute("pTags", Tag.PROGRAMMING.gettags());
         model.addAttribute("fTags", Tag.FRAME.gettags());
@@ -95,9 +98,9 @@ public class PublishController {
             question.setCreator(user.getAcountId());
             question.setGmtCreate(System.currentTimeMillis());
             question.setGmtModified(question.getGmtCreate());
-            question.setLikeCount(1);
-            question.setCommentCount(1);
-            question.setViewCount(1);
+            question.setLikeCount(0);
+            question.setCommentCount(0);
+            question.setViewCount(0);
             question.setGmtCreate(System.currentTimeMillis());
             question.setGmtModified(question.getGmtCreate());
             questionMap.create(question);

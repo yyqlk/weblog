@@ -25,7 +25,7 @@
                 <span class="text-desc">
                     发起人:<span th:text="${questionDTO.user.name}"></span>|
                     阅读数：<span th:text="${questionDTO.question.viewCount}"></span>
-                    阅读时间:<span th:text="${#dates.format(questionDTO.question.gmtCreate,'dd MMM yyyy')}"></span>
+                    阅读时间:<span th:text="${#dates.format(questionDTO.question.gmtCreate,'MM-dd yyyy')}"></span>
                 </span>
 
                 <hr class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -43,12 +43,12 @@
 
                 <hr class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin: 5px;">
 <!--              修改问题-->
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin: 10px 0px 10px 0px">
                 <span class="text-desc">
                     <span class="glyphicon glyphicon-pencil" aria-hidden="true" th:if="${questionDTO.user.acountId==#request.getAttribute('userId')}"><a th:href="@{'/publish/'+ ${questionDTO.question.id}}">修改</a></span>
                 </span>
                 </div>
-                <hr class="col-xs-12 col-sm-12 col-md-12 col-lg-12 hr" >
+<!--                <hr class="col-xs-12 col-sm-12 col-md-12 col-lg-12 hr " style="color: white">-->
 <!--            回复内容-->
                 <h4>
                     <span th:text="${questionDTO.question.commentCount}"></span>个回复
@@ -68,7 +68,7 @@
                             <div th:id="${'comment-body-'+commentDTO.comment.id}">
                                 <span class="glyphicon glyphicon-thumbs-up icon-img"></span>
                                 <span class="glyphicon glyphicon-comment icon-img" th:data-id="${commentDTO.comment.id}"  onclick="collapseComment(this)" ></span>
-                                <span class="pull-right" th:text="${#dates.format(questionDTO.question.gmtCreate,'yyyy-mm-dd')}"></span>
+                                <span class="pull-right" th:text="${#dates.format(questionDTO.question.gmtCreate,'yyyy-MM-dd')}"></span>
 <!--                                二级回复栏-->
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12  collapse"  th:id="${'comment'+commentDTO.comment.id}">
 
@@ -97,7 +97,7 @@
                         </div>
                         <hr class="col-xs-12 col-sm-12 col-md-12 col-lg-12 hr">
                     </div>
-                    <hr class="col-xs-12 col-sm-12 col-md-12 col-lg-12 hr">
+<!--                    <hr class="col-xs-12 col-sm-12 col-md-12 col-lg-12 hr">-->
                 </div>
 
 

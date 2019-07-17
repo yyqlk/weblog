@@ -75,7 +75,7 @@ public class CommentService {
             //创建通知
             Comment pareComment = pareComments.get(0);
             Question pareQuestion = questionMap.findQUestionById(pareComment.getParentId());
-            noticeService.create(comment,pareQuestion,user,2);
+            noticeService.create(pareComment,pareQuestion,user,2);
 
             //更新评论的子评论数（未开发）
             return ResultDTO.okOf(2000, "success");
