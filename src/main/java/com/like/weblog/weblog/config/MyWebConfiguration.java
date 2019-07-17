@@ -1,7 +1,6 @@
 package com.like.weblog.weblog.config;
 
 import com.like.weblog.weblog.utils.LoginHandleInterceptor;
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;

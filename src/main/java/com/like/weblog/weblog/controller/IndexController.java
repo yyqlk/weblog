@@ -36,6 +36,7 @@ public class IndexController {
             model.addAttribute("noticeCount",noticeService.countNotice(user.getAcountId()));
         }
         PageQuestionDTO questionListDTO = questionService.findPageQuestionDTO(page, size);
+
         model.addAttribute("pageQuestionsDTO",questionListDTO);
         return "index";
     }
