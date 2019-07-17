@@ -19,8 +19,14 @@ public class PageQuestionDTO {
         this.currentPage=page;
         if(totalCount%size != 0){
             this.totalPage=totalCount/size+1;
+            if(totalPage<1){
+                totalPage=1;
+            }
         }else{
             this.totalPage=totalCount/size;
+            if(totalPage<1){
+                totalPage=1;
+            }
         }
         if(currentPage == 1){
             this.isfist = true;
@@ -42,15 +48,15 @@ public class PageQuestionDTO {
                 pages.add(i);
             }
         } else if(currentPage > 3 && currentPage + 2 <= totalPage) {
-                for (int i = currentPage - 3; i < currentPage + 2; i++) {
-                    pages.add(i);
-                }
-            }else if (currentPage + 2 > totalPage) {
-                for (int i = totalPage - 5; i < totalPage; i++) {
-                    pages.add(i);
-                }
+            for (int i = currentPage - 3; i < currentPage + 2; i++) {
+                pages.add(i);
             }
-}
+        }else if (currentPage + 2 > totalPage && totalPage>5) {
+            for (int i = totalPage - 5; i < totalPage; i++) {
+                pages.add(i);
+            }
+        }
+    }
 
 
 
