@@ -38,7 +38,7 @@ public class ProfilesController {
         }
         User user = (User) request.getAttribute("user");
         if(user!=null) {
-            request.setAttribute("user", user.getName());
+            request.setAttribute("userName", user.getName());
             model.addAttribute("noticeCount",noticeService.countNotice(user.getAcountId()));
         }
         //我的问题

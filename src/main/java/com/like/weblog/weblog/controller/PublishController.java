@@ -58,7 +58,7 @@ public class PublishController {
         model.addAttribute("tag", tag);
         User user = (User) request.getAttribute("user");
         if (user != null) {
-            request.setAttribute("user", user.getName());
+            request.setAttribute("userName", user.getName());
         }
         boolean isContain = TagService.isContain(tag);
         if(!isContain){

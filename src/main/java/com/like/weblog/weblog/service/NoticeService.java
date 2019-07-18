@@ -47,7 +47,7 @@ public class NoticeService {
     public void create(Question question, User user,Integer type) {
         Notice notice = new Notice();
         notice.setContentId(question.getId());
-        notice.setNotifiedCotent(question.getDescription());
+        notice.setNotifiedCotent(question.getTitle());
         notice.setNotifiedTime(System.currentTimeMillis());
         notice.setNotifier(user.getName());
         notice.setNotifierId(user.getAcountId());

@@ -43,7 +43,7 @@ public class QuestionController {
         //获取登陆用户
         User user = (User)request.getAttribute("user");
         if (user!=null) {
-            request.setAttribute("user", user.getName());
+            request.setAttribute("userName", user.getName());
             request.setAttribute("userId", user.getAcountId());
             model.addAttribute("noticeCount",noticeService.countNotice(user.getAcountId()));
         }

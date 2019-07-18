@@ -37,6 +37,6 @@ public interface QuestionMap {
     @Update("UPDATE question SET comment_count = comment_count+1 WHERE id =#{parentId}")
     void updateQuestionComment(Integer parentId);
 
-    @Select("select * from question where tag  regexp #{tag} and id != #{id}")
+    @Select("select * from question where tag  regexp #{tag} and id != #{id} order by view_count desc limit 0,10 ")
     List<Question> findQUestionByTag(Question question);
 }

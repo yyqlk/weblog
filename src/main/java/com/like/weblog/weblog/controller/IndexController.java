@@ -31,7 +31,7 @@ public class IndexController {
         User user = (User)request.getAttribute("user");
         if (user!=null) {
             //把uesr传到页面
-            request.setAttribute("user", user.getName());
+            request.setAttribute("userName", user.getName());
             //把用户的通知传到也页面
             model.addAttribute("noticeCount",noticeService.countNotice(user.getAcountId()));
         }

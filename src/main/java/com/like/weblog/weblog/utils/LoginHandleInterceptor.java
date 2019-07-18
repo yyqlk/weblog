@@ -2,10 +2,8 @@ package com.like.weblog.weblog.utils;
 
 import com.like.weblog.weblog.map.UserMapper;
 import com.like.weblog.weblog.model.User;
-import com.sun.xml.internal.ws.runtime.config.TubelineFeatureReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
