@@ -22,6 +22,9 @@ public interface QuestionMap {
     @Select("SELECT * FROM question WHERE creator = #{creator} ORDER BY gmt_create DESC LIMIT #{offset},#{size}")
     List<Question> findQuestionByCreater(Integer offset, Integer size, Long creator);
 
+    @Select("SELECT * FROM question WHERE title regexp #{search} ORDER BY gmt_create DESC LIMIT #{offset},#{size}")
+    List<Question> findQuestionBySearch(Integer offset, Integer size, String search);
+
     @Select("select count(*) from question WHERE creator = #{creator}")
     Integer countByCreater(Long creator);
 
@@ -39,4 +42,7 @@ public interface QuestionMap {
 
     @Select("select * from question where tag  regexp #{tag} and id != #{id} order by view_count desc limit 0,10 ")
     List<Question> findQUestionByTag(Question question);
+
+    @Select("select count(*) from question where title regexp #{search}")
+    Integer countBysearch(String search);
 }

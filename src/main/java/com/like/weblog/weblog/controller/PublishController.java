@@ -108,6 +108,7 @@ public class PublishController {
         return "redirect:/";
     }
 
+
     @GetMapping("/publish/{id}")
     public String getQuestin(@PathVariable("id") Integer id, Model model, HttpServletRequest request) {
         QuestionDTO questionDTO = questionService.findQuestionById(id);
