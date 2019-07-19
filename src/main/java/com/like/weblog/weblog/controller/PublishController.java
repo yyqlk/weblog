@@ -37,7 +37,7 @@ public class PublishController {
     public String publish(HttpServletRequest request,Model model) {
         User user = (User) request.getAttribute("user");
         if (user != null) {
-            request.setAttribute("user", user.getName());
+            request.setAttribute("userName", user.getName());
             model.addAttribute("noticeCount",noticeService.countNotice(user.getAcountId()));
         }
         model.addAttribute("pTags", Tag.PROGRAMMING.gettags());
