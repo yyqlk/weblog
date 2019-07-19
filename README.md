@@ -57,3 +57,13 @@ mvn方式逆向生成mybatis：
 
 
 ##部署
+#安装环境
+-git
+-jdk
+-maven
+-mysql
+#步骤
+1.从github把代码clone过来
+2.复制配置文件作为正式环境的配置文件，修改正式配置文件
+3.mvn clean compile package
+4java -jar -Dspring.profiles.active=production target/weblog-0.0.1-SNAPSHOT.jar
